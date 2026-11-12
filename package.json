@@ -1,0 +1,14 @@
+{
+  "name": "upwell",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Upwell: landing page and waitlist for an online marketing & ads service",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

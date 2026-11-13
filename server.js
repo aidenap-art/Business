@@ -161,6 +161,7 @@ function exportWaitlist(url, res) {
 async function serveStatic(url, res) {
   let rel = decodeURIComponent(url.pathname);
   if (rel.endsWith("/")) rel += "index.html";
+  else if (!path.extname(rel)) rel += ".html"; // clean URLs: /privacy -> privacy.html
   const file = path.join(PUBLIC_DIR, path.normalize(rel));
   if (!file.startsWith(PUBLIC_DIR + path.sep)) return send(res, 403, "Forbidden");
   try {

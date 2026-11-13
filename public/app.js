@@ -11,10 +11,16 @@
 
   // Reveal-on-scroll
   if ("IntersectionObserver" in window) {
-    const targets = document.querySelectorAll(".card, .steps li, .plan, .promise-list li, .faq__list details");
+    const targets = document.querySelectorAll(".feature, .not-y__list li, .who__card, .steps li:not(.steps__arrow), .plan, .faq__list details");
     const io = new IntersectionObserver((items) => {
       items.forEach((it) => {
-        if (it.isIntersecting) { it.target.classList.add("is-in"); io.unobserve(it.target); }
+        if (it.isIntersecting) {
+          const el = it.target;
+          el.classList.add("is-in");
+          io.unobserve(el);
+          // drop the stagger delay once revealed so hover animations respond instantly
+          setTimeout(() => { el.style.transitionDelay = ""; }, 1000);
+        }
       });
     }, { rootMargin: "0px 0px -8% 0px" });
     targets.forEach((el, i) => {
@@ -58,7 +64,7 @@
     document.querySelectorAll(".fine").forEach((el) => el.remove());
     document.querySelectorAll("[data-share]").forEach((btn) => {
       btn.addEventListener("click", async () => {
-        const shareData = { title: "Upwell", text: "Upwell runs online ads & marketing for growing businesses. Join the waitlist:", url: location.origin };
+        const shareData = { title: "Upwell", text: "Upwell runs online ads & social growth for businesses and creators. Join the waitlist:", url: location.origin };
         try {
           if (navigator.share) await navigator.share(shareData);
           else { await navigator.clipboard.writeText(location.origin); btn.textContent = "Link copied!"; }

@@ -26,6 +26,14 @@ test("serves the landing page", async () => {
   assert.match(await res.text(), /Upwell/);
 });
 
+test("serves legal pages, cookie script and icons", async () => {
+  for (const [url, re] of [["/privacy", /Privacy Policy/], ["/terms", /Terms of Service/], ["/consent.js", /upwell_consent/], ["/icons.svg", /<symbol id="arrow-right"/]]) {
+    const res = await fetch(base + url);
+    assert.equal(res.status, 200, url);
+    assert.match(await res.text(), re, url);
+  }
+});
+
 test("adds signups, dedupes, and validates", async () => {
   let res = await join({ email: "A@Example.com", name: "Ana", business: "Ana's Bakery", budget: "1k-5k" });
   assert.equal(res.status, 201);
